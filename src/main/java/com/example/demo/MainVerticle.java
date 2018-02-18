@@ -71,8 +71,16 @@ public class MainVerticle extends AbstractVerticle {
                             for (JsonObject json : fetch.result()) {
                                 System.out.println(json);
                             }
+							routingContext.put("data",fetch.result());
+                                engine.render(routingContext, "templates/index.hbs", hnd -> {
+                                        if (hnd.succeeded()) {
+                                            routingContext.response().end(hnd.result());
+                                        } else {
+                                            routingContext.fail(hnd.cause());
+                                        }
+                                    });
 
-                            response.putHeader("content-type","application/json").end(fetch.result());
+                            response.putHeader("content-type","application/json").end(fetch.result().toString());
 
 
                         }
