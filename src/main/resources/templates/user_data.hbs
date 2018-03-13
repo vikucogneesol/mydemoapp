@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Data</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body data-length1="{{dataList.size}}" data-length2="{{dataList.length}}">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="http://localhost:2018/login">Add Users</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+    <h2>User Records</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Question</th>
+            <th>File</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+    {{#each dataList}}
+
+    <tr>
+        <td>{{phone}}</td>
+        <td>{{email}}</td>
+        <td>{{question}}</td>
+
+        <td><img height=150 width=150 src="data:image/*;base64,{{file}}" alt="" ></td>
+
+        <td><a  id="{{_id}}" class="userDelete">Delete</a></td>
+    </tr>
+
+    {{/each}}
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+<script>
+$(".userDelete").on('click', function(){
+	var userObject = $(".userDelete").attr('id');
+	alert(userObject);
+    $.ajax({
+		url : "localhost:2018/delete",
+		data : {
+			userObject : userObject,
+		},
+		success : function(results){
+			if(results){
+				alert(results);
+				$('#messageDiv').html("Record has been Deleted");
+			}
+		}
+	});
+});
+</script>
