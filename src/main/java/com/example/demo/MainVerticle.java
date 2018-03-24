@@ -50,7 +50,7 @@ public class MainVerticle extends AbstractVerticle {
         router.get("/login").handler(ctx -> {
             engine.render(ctx, "templates/index.hbs", res -> {
                 if (res.succeeded()) {
-                    ctx.response().end(res.result());
+                    ctx.response().putHeader("Content-Type","text/html").end(res.result());
                 } else {
                     ctx.fail(res.cause());
                 }
